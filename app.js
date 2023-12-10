@@ -8,6 +8,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.json());
 dotenv.config({path:'./config.env'});   
+const dbconnect=require('./server.js');
+dbconnect();
 app.use(cors({
     credentials: true,
     origin:process.env.WEBLINK,
