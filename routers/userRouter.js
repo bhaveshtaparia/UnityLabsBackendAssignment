@@ -2,7 +2,7 @@ const express=require('express')
 const jwt=require('jsonwebtoken')
 const bcrypt=require('bcryptjs')
 const User=require('../models/usersModel');
-
+const {auth}=require('../middleware/auth')
 // user sign up  router 
 const signup=async(req,res)=>{
 
@@ -30,9 +30,6 @@ const signup=async(req,res)=>{
         
         const options={
             expires:new Date(Date.now()+process.env.EXPIREC*24*60*60*1000),
-            httpOnly:true,
-            sameSite: 'none',
-            secure:true
         }
         res.status(201).cookie('token',token,options).json({
             user,
@@ -71,9 +68,6 @@ const login=async(req,res)=>{
         
         const options={
             expires:new Date(Date.now()+process.env.EXPIREC*24*60*60*1000),
-            httpOnly:true,
-            sameSite: 'none',
-            secure:true
         }
         res.status(201).cookie('token',token,options).json({
             message:"login successfully",
@@ -97,4 +91,25 @@ const login=async(req,res)=>{
     }
     
     router.route('/login').post(login);
+
+
+    // logout router
+    const logout=async(req,res)=>{
+
+        // console.log(req);
+        try{
+            const options={
+                expires:new Date(Date.now(0)),
+            }
+            res.status(201).cookie('token',null,options).json({
+                success:true,
+                message:"Logout Successfully",
+            })
+        }catch(err){
+                res.status(500).json({ message: err });
+            
+        }
+    }
+    
+    router.route('/logout').get(auth,logout);
 module.exports=router;
