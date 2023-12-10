@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 dotenv.config({path:'./config.env'});   
 const dbconnect=require('./server.js');
 dbconnect();
+const user=require('./routers/userRouter.js');
 app.use(cors({
     credentials: true,
     origin:process.env.WEBLINK,
@@ -19,7 +20,7 @@ app.use(cors({
 app.get('/',(req,res)=>{
 res.send("working..."); 
 })
-
+app.use('/api/auth',user);
 app.listen(process.env.PORT,()=>{
     console.log(`http://localhost:${process.env.PORT}`);
 })

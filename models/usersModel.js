@@ -4,7 +4,8 @@ const userSchema=new mongoose.Schema({
     username:{
         type:String,
         required:true,
-        minlength:[3,"Name should containe atleast 3 char"]
+        minlength:[3,"Name should containe atleast 3 char"],
+        unique:true
     },
     password:{
         type:String,
@@ -26,7 +27,7 @@ userSchema.post('save', function(error, doc, next) {
   
     if (error.name === 'MongoServerError' && error.code === 11000) {
         // Duplicate email error
-        next(new Error('Email already exists'));
+        next(new Error('userName already exists'));
     }
     else if(error.name==='ValidationError'){
     next(new Error(error.message));
