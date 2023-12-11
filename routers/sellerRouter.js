@@ -1,6 +1,7 @@
 const express=require('express')
 const router=express.Router();
 const Catalog=require('../models/catalogsModel');
+const Order=require('../models/orderModel')
 const { auth } = require('../middleware/auth');
 const { authorizeRole } = require('../middleware/role');
 
@@ -42,9 +43,26 @@ const createCatalog=async(req,res)=>{
 router.route('/create-catalog').post(auth,authorizeRole("seller"),createCatalog);
 
 
+//Retrieve the list of orders received by a seller
 
+const OrderDetails=async(req,res)=>{
+    try{
+        const order=await Order.find({sellerId:req.user._id});
+        
+        res.status(200).json({
+            order,
+            success:true
+        })
 
+    }catch(err){
+res.status(500).json({
+    "message":"internal server error",
+    success:false
+})
+    }
+}
 
+router.route('/orders').get(auth,authorizeRole("seller"),OrderDetails);
 
 
 module.exports=router;
