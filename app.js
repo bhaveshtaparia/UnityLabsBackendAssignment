@@ -12,6 +12,7 @@ const dbconnect=require('./server.js');
 dbconnect();
 const user=require('./routers/userRouter.js');
 const Seller=require('./routers/sellerRouter.js');
+const Buyer=require('./routers/buyerRouter.js');
 app.use(cors({
     credentials: true,
     origin:process.env.WEBLINK,
@@ -23,6 +24,7 @@ res.send("working...");
 })
 app.use('/api/auth',user);
 app.use('/api/seller',Seller);
+app.use('/api/buyer',Buyer);
 app.listen(process.env.PORT,()=>{
     console.log(`http://localhost:${process.env.PORT}`);
 })
