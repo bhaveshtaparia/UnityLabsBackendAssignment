@@ -16,13 +16,10 @@ const orderSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        price: {
-            type: Number,
-            required: true
-        },
         quantity: {
             type: Number,
-            required: true
+            required: true,
+            default:1
         }
     }],
     orderDate: {
