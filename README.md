@@ -26,19 +26,37 @@ Follow these steps to set up and run the project locally:
 
 
 
+
 ## API Reference
 
 #### Auth APIs
 Register a user (accept username, password, type of user - buyer/seller)
+
+
 ```http
   POST/api/auth/register
 ```
+Example :-input data:-{
+   "username":"Bhavesh",
+   "password":"12345678",
+   "cpassword":"12345678",
+   "type":"seller"
+}
 
 Let a previously registered user log in (e.g. retrieve authentication token)
 ```http
   POST /api/auth/login
 ```
 
+Example :-input data:-{
+ "username":"Bhavesh",
+  "password":"12345678"
+}
+
+logout
+```http
+  POST /api/auth/logout
+```
 #### APIs for buyers
 
 Get a list of all sellers
@@ -55,6 +73,19 @@ Send a list of items to create an order for seller with id = seller_id
 ```http
  POST /api/buyer/create-order/:seller_id
 ```
+Example :input data->
+{
+  "items":[
+  {
+    "name":"xyz",
+    "quantity":2
+  },
+  {
+    "name":"abc"
+  }
+  
+  ]
+}
 
 
 
@@ -64,6 +95,18 @@ Send a list of items to create a catalog for a seller
 ```http
  POST /api/seller/create-catalog
 ```
+Example:-input Data->{
+  "products":[{
+    "name":"xyz",
+    "price":123
+  },
+  {
+    "name":"abc",
+    "price":123
+  }
+  ]
+}
+
 Retrieve the list of orders received by a seller
 ```http
 GET /api/seller/orders
